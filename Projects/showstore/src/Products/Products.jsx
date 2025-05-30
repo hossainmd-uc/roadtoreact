@@ -1,29 +1,43 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import './products.css'
 import { AiFillStar } from 'react-icons/ai'
 import { BsFillBagHeartFill } from 'react-icons/bs'
 
+import data from '../db/data'
+import { RecommendedContext } from '../App'
+
 const Products = () => {
+
+  const {filter} = useContext(RecommendedContext);
+
   return (
     <>
     <section className='card-container'>
-
+      {data.map(({img, title, star, reviews, prevPrice, newPrice, company, color, category}, i) => {
+        console.log('filter is ' + filter)
+        if (filter !== "All" && company !== filter){
+          console.log("returning null")
+          return null;
+        }
+        return(
       <section className="card">
-        <img src='' className='card-img'></img>
+        <img src={img} className='card-img'></img>
         <div className="card-details">
-          <h3 className='card-title'></h3>
+          <h3 className='card-title'>{title}</h3>
 
           <section className="card-reviews">
-            <AiFillStar className='ratings-star'/> 
-            <AiFillStar className='ratings-star'/> 
-            <AiFillStar className='ratings-star'/> 
-            <AiFillStar className='ratings-star'/>
-            <span className="total-reviews">4</span>
+            {Array.from({ length: star }).map((_, i) => {
+              return (
+                <AiFillStar key={i} className="ratings-star" />
+              )
+              }
+              )}
+            <span className="total-reviews">{reviews} ratings</span>
           </section>
 
           <section className="card-price">
             <div className="price">
-              <del>$300</del> 200
+              <del>{prevPrice}</del> {newPrice}
             </div>
             <div className="bag">
               <BsFillBagHeartFill className='bag-icon'/>
@@ -33,6 +47,10 @@ const Products = () => {
         </div>
 
       </section>
+        )
+      })}
+
+
     </section>
     </>
   )
