@@ -9,7 +9,8 @@ nav {
 }
 
 input{
-    padding: 12px 20px;
+    padding-left: 12px;
+    height: 2.6rem;
     border: none;
     background: #f7f6f6;
     outline: none;
@@ -17,10 +18,11 @@ input{
     border-radius: 5px; 
     position: relative;
     width: 14rem;
+
 }
 
 .nav-icons{
-    padding-right: 1.5rem;
-    height: 1.5 rem;
-    margin-left: 2 rem;
+    min-height: 1.5rem;
+    margin-left: 1.5rem;
+    min-width: 2rem;
 }

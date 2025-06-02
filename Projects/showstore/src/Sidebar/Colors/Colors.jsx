@@ -3,7 +3,7 @@ import "./colors.css"
 
 const Colors = () => {
   return (
-    <div>Colors</div>
+    <div></div>
   )
 }
 

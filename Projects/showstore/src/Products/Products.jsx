@@ -4,19 +4,34 @@ import { AiFillStar } from 'react-icons/ai'
 import { BsFillBagHeartFill } from 'react-icons/bs'
 
 import data from '../db/data'
-import { RecommendedContext } from '../App'
+import { CategoryContext, InputContext, RecommendedContext } from '../App'
 
 const Products = () => {
 
-  const {filter} = useContext(RecommendedContext);
+  const categoryMap = {
+    "0-50" : {min: 0, max: 50},
+    "50-100" : {min: 50, max: 100},
+    "100-150" : {min: 100, max: 150},
+    "over-150" : {min: 150, max: 100000},
+  }
+
+  const {recfilter} = useContext(RecommendedContext);
+  const {input} = useContext(InputContext);
+  const {categoryfilter} = useContext(CategoryContext)
 
   return (
     <>
     <section className='card-container'>
       {data.map(({img, title, star, reviews, prevPrice, newPrice, company, color, category}, i) => {
-        console.log('filter is ' + filter)
-        if (filter !== "All" && company !== filter){
-          console.log("returning null")
+        /* Checking if filter is applied, returning null if no match*/
+        if (recfilter !== "All" && company !== recfilter){
+          return null;
+        }
+        /* Checking to see if input, returning null if not match*/
+        if (input !== "" && !title.toLowerCase().includes(input.toLowerCase())){
+          return null;
+        }
+        if (categoryfilter !== "All" && (newPrice < categoryMap[categoryfilter].min || newPrice > categoryMap[categoryfilter].max)){
           return null;
         }
         return(
@@ -49,7 +64,6 @@ const Products = () => {
       </section>
         )
       })}
-
 
     </section>
     </>

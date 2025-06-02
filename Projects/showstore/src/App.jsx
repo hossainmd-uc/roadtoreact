@@ -7,19 +7,27 @@ import "./index.css"
 import Sidebar from './Sidebar/Sidebar'
 
 export const RecommendedContext = createContext();
+export const InputContext = createContext();
+export const CategoryContext = createContext();
 
 function App() {
 
-  const [filter, setFilter] = useState("All");
+  const [recfilter, setRecFilter] = useState("All");
+  const [input, setInput] = useState("");
+  const [categoryfilter, setCategoryFilter] = useState("All");
 
   return (
     <>
-      <Sidebar />
-      <Nav />
-      <RecommendedContext.Provider value={{filter, setFilter}}>
-        <Recommended />
-        <Products />
-      </RecommendedContext.Provider>
+      <CategoryContext.Provider value={{categoryfilter, setCategoryFilter}}>
+        <Sidebar />
+        <InputContext.Provider value = {{input, setInput}} >
+          <RecommendedContext.Provider value={{recfilter, setRecFilter}}>
+            <Nav/>
+            <Recommended />
+            <Products />
+          </RecommendedContext.Provider>
+        </InputContext.Provider>
+      </CategoryContext.Provider>
     </>
 
   )
